@@ -1,0 +1,109 @@
+{% extends 'base.html'%}
+{% block style %}
+    <title>Login</title>
+    <style type="text/css">
+        #fundo{
+            background-color: #B0FBFE;
+        }
+        #menu{
+            background-color: #E3B601;
+            color: #141313;
+            text-align: center;
+            height: 128px;
+            padding-top: 35px;
+            margin: auto;
+            font-size: 2.5em;
+        }
+    
+        .messages {
+            margin-bottom: 20px;
+            font-size: 0.8em;
+        }     
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert.error {
+            color: #721c24;
+        }
+        .alert.success {
+            color: #088D93;
+        }
+        .botao{
+            background-color: aqua;
+            color:#FFFAFA;
+            width: 200px;
+            margin-top: 20px;
+            height: auto;
+            text-align: center;
+            line-height: 2em;
+            
+        }
+        .logando{
+            float: right;
+            width: 720px;
+            padding: 2em 5em;
+            margin: 10em 20em;
+            border: 1px solid red;
+            background-color: #FFFAFA;
+            text-align: center;
+        }
+        .botao-sem-borda {
+        background-color: transparent;
+        border: none; 
+        padding: 0; 
+        }
+        p{
+            margin-top: 10px;
+            padding-top: 10px;
+            font-size: 0.8em;
+        }
+    
+    </style>
+{% endblock %}
+{% block conteudo %}
+<body id="fundo">
+    <form action="{% url 'login_user' %}" method="post" onsubmit="return limparMensagens()">
+        {% csrf_token %}
+        <div id="login">
+            <hr>
+
+            <div class="logando">
+                <h3>Login</h3>
+                <div>
+                    Nickname<br><input name="nickname" class="form-control-sm" type="text">
+                </div>
+                
+                <div>
+                    Senha<br><input name="senha" class="form-control-sm" type="password">
+                </div>
+                
+                <div>
+                    <button type="submit" class="botao">Login</button><br>
+                    <p>Não tem conta cadastrada? <button class="botao-sem-borda"><a href="registrar/">Cadastre-se</a></button></p>
+                </div>
+                <!-- Espaço para mensagens -->
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} ">
+                            <strong>{{ message }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+        </div>
+    </form>
+
+    <script>
+        // Função para limpar mensagens de erro
+        function limparMensagens() {
+            var messages = document.querySelector('.messages');
+            if (messages) {
+                messages.innerHTML = ''; // Limpa o conteúdo das mensagens
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<title>Cadastro</title>
+<style type="text/css">
+        #menu{
+            background-color: #E3B601;
+            color: #141313;
+            text-align: center;
+            height: 128px;
+            padding-top: 35px;
+            margin: auto;
+            font-size: 2.5em;
+        }
+        #cadastro{
+            display: block;
+            text-align: center;
+            padding: auto 15px;
+            margin: 5px;
+        }
+        .distancia{
+            margin: 8px;
+        }
+        h1{
+            padding: 15px;
+        }
+        .messages {
+            margin-bottom: 20px;
+        }     
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert.error {
+            color: #721c24;
+        }
+        .alert.success {
+            color: #088D93;
+        }
+    </style>
+{% endblock %}
+
+{% block conteudo %}
+  <body>
+    <div id="menu">
+        <span><strong>Cadastre-se</strong></span>
+    </div>
+    <form action="{% url 'create_user' %}" method="post" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <div id="cadastro">
+            <hr>
+            <!-- Espaço para mensagens -->
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} ">
+                            <strong>{{ message }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <!-- Fim do espaço para mensagens -->
+            <div class="distancia">
+                Nickname<br><input name="nickname" class="form-control-sm" type="text">
+            </div>
+            <div class="distancia">
+                Nome<br><input name="nome" class="form-control-sm" type="text">
+            </div>
+            <div class="distancia">
+                Email<br><input name="email" class="form-control-sm" type="text">
+            </div>
+            <div class="distancia">
+                Idade<br><input name="idade" class="form-control-sm" type="text">
+            </div>
+            <div class="distancia">
+                Senha<br><input id="senha" name="senha" class="form-control-sm" type="password">
+            </div>
+            <div class="distancia">
+                Confirmar Senha<br><input id="confirmar_senha" class="form-control-sm" type="password">
+            </div>
+            <br>
+            <button>Cadastrar</button>
+        </div>
+    </form>
+
+    <script>
+        function validateForm() {
+            var senha = document.getElementById("senha").value;
+            var confirmarSenha = document.getElementById("confirmar_senha").value;
+    
+            if (senha !== confirmarSenha) {
+                alert("As senhas não coincidem.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+{% endblock %}

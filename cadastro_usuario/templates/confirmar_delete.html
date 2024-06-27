@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block style %}
+    <style>
+        .opcoes{
+            text-align: center;
+            padding: 2em;
+            margin: 2em auto;
+            background-color: beige;
+            display: block;
+        }
+        div{
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+{% block conteudo %}
+<body>
+    <div class="container">
+        <div>
+            <h2>Tem certeza que deseja excluir sua conta {{ usuario.name }}? </h2>
+        </div>
+        <div>
+            <form action="{% url 'delete_user' %}" method="post">
+                {% csrf_token %}
+                <div class="opcoes">
+                <button type="submit">Sim, excluir minha conta</button> <br>
+                <a href="{% url 'home' %}">Não, voltar para a página inicial</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <title>Home</title>
+    <style type="text/css">
+        #menu{
+            background-color: #E3B601;
+            color: #141313;
+            text-align: center;
+            height: 128px;
+            padding-top: 35px;
+            margin: auto;
+            font-size: 2.5em;
+        }
+        .opcoes{
+            text-align: center;
+            padding: 2em;
+            margin: 2em auto;
+            background-color: beige;
+            display: block;
+        }
+        .text-settings{
+            text-decoration: none;
+            color:#141313;
+        }
+        button{
+            margin: 2em auto;
+            padding: 5px;
+            background-color: aqua;
+            display: inline-block;
+            width: 264px;
+        }
+        body{
+            text-align: center;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centraliza os botões horizontalmente */
+        }
+    </style>
+{% endblock %}
+{% block conteudo %}
+  <body>
+    <div id="menu">
+        <span><strong>Sistema de Usuários</strong></span>
+    </div>
+        <div class="opcoes">
+            <form action="{% url 'home' %}" method="post">
+                {% csrf_token %}
+                <div class="container">
+                    <table class="table table-bordered table-strip">
+                        <tr>
+                            <th>Nickname</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Idade</th>
+                        </tr>
+                        <tr>
+                            <td>{{usuario.nickname}}</td>
+                            <td>{{usuario.name}}</td>
+                            <td>{{usuario.email}}</td>
+                            <td>{{usuario.age}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h4>Ações</h4>
+                    <div class="button-container">
+                        <button><a class="text-settings" href="{% url 'listagem_usuarios' %}">Ver todos os usuários cadastrados</a></button><br>
+                        <button><a class="text-settings" href="{% url 'update_user' %}">Alterar dados</a></button><br>        
+                        <button><a class="text-settings" href="{% url 'delete_user' %}">Excluir conta</a></button><br>
+                    </div>
+                </div>
+            </form>
+            <!-- Formulário de logout -->
+            <form action="{% url 'logout_user' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="text-settings">Sair</button>
+            </form>
+        </div>   
+    
+
+
+
+{% endblock %}
